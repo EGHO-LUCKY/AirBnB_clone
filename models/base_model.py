@@ -6,10 +6,23 @@ import datetime
 
 class BaseModel:
     """This is the base class"""
-    def __init__(self, id=str(uuid.uuid4()), created_at=datetime.datetime.now(), updated_at=datetime.datetime.now()):
-        self.id = id
-        self.created_at = created_at
-        self.updated_at = updated_at
+    def __init__(self, *args, **kwargs):
+        if kwargs:
+            for key, value in kwargs.items():
+                if key == "id":
+                    self.id = value
+                elif key == "created_at":
+                    self.created_at = datetime.datetime.fromisoformat(value)
+                elif key == "updated_at":
+                    self.updated_at = datetime.datetime.fromisoformat(value)
+                elif key == "__class__":
+                    pass
+                else:
+                    self.__dict__[key] = value
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.datetime.now()
+            self.updated_at = datetime.datetime.now()
 
     def __str__(self):
         return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
