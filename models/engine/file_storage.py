@@ -3,9 +3,10 @@
 
 import json
 
+
 class FileStorage:
     """This is the file_storage class"""
-    
+
     __file_path = "file.json"
     __objects = {}
 
@@ -37,4 +38,3 @@ class FileStorage:
                     print(BaseModel(**value))
         except FileNotFoundError:
             pass
-
