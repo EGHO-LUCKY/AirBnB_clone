@@ -106,17 +106,11 @@ class HBNBCommand(cmd.Cmd):
         """Displays all models in the database"""
         if not arg:
             try:
-                new_list = []
                 new_dict = self.read_json("file.json")
-                for key, value in new_dict.items():
-                    new_list.append(str(BaseModel(**new_dict[key])))
-                #new_list = [str(BaseModel(**value)) for value in new_dict.values()]
-                if new_list:
-                    print(new_list)
-                else:
-                    print("There is no data in the data base")
+                new_list = [str(BaseModel(**value)) for value in new_dict.values()]
+                print(new_list)
             except:
-                print("There is no data in the data base")
+                print("[]")
         else:
             model_dict = {"BaseModel": BaseModel}
             new_dict = self.read_json("file.json")
@@ -164,7 +158,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             key = ".".join(my_list[:2])
             if all_instance is None:
-                print("There is no data in the data base")
+                pass
             else:
                 if key in all_instance.keys():
                     try:
