@@ -8,6 +8,7 @@ from models import storage
 class BaseModel:
     """This is the base class"""
     def __init__(self, *args, **kwargs):
+
         if kwargs:
             for key, value in kwargs.items():
                 if key == "id":
@@ -19,7 +20,7 @@ class BaseModel:
                 elif key == "__class__":
                     pass
                 else:
-                    self.__dict__[key] = value
+                    setattr(self, key, value)
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.datetime.now()
@@ -40,4 +41,5 @@ class BaseModel:
             if key in search_list:
                 value = value.isoformat()
             my_dict[key] = value
+        #print(self.__dict__)
         return my_dict
