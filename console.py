@@ -10,26 +10,11 @@ from models import storage
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
 
-    def read_json(self, file_path):
-        try:
-            with open(file_path, "r", encoding="UTF-8") as file:
-                new_dict = json.load(file)
-                return new_dict
-        except:
-            return None
-
-    def write_json(self, file_path, new_dict):
-        try:
-            with open(file_path, "w", encoding="UTF-8") as file:
-                json.dump(new_dict, file)
-        except:
-            print("There is no data in the data base")
-
     def do_quit(self, arg):
         """Quit command to exit the program
         """
         return True
-    
+
     def do_EOF(self, arg):
         """Handles end-of-file (Ctrl+D or Ctrl+Z).
         """
@@ -105,7 +90,7 @@ class HBNBCommand(cmd.Cmd):
                 all_instances = storage.all()
                 new_list = [str(value) for value in all_instances.values()]
                 print(new_list)
-            except:
+            except Exception:
                 print("[]")
         else:
             model_dict = {"BaseModel": BaseModel}
@@ -162,44 +147,13 @@ class HBNBCommand(cmd.Cmd):
                 if key in all_instance.keys():
                     try:
                         value = my_list[3].split('"')[1]
-                    except:
+                    except Exception:
                         value = my_list[3]
                     attribute = my_list[2]
                     instance = all_instance[key]
                     setattr(instance, attribute, value)
                     instance.save()
 
+
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
