@@ -17,21 +17,20 @@ class FileStorage:
         self.__objects[obj_class_name] = obj
 
     def save(self):
-        with open(self.__file_path, 'w') as file:
+        with open(self.__file_path, 'w', encoding="UTF-8") as file:
             new_dict = {}
             for key, value in self.__objects.items():
                 new_dict[key] = value.to_dict()
-            json_string = json.dumps(new_dict)
-            file.write(json_string)
+            json.dump(new_dict, file)
 
     def reload(self):
         try:
             from models.base_model import BaseModel
-            with open(self.__file_path, 'r') as file:
-                json_string = file.read()
-                new_dict = json.loads(json_string)
+            with open(self.__file_path, 'r', encoding="UTF-8") as file:
+                new_dict = json.load(file)
                 for key, value in new_dict.items():
                     self.__objects[key] = BaseModel(**value)
-        except:
+                    print(BaseModel(**value))
+        except FileNotFoundError:
             pass
 
