@@ -5,6 +5,7 @@ import uuid
 import datetime
 from models import storage
 
+
 class BaseModel:
     """This is the base class"""
     def __init__(self, *args, **kwargs):
@@ -28,9 +29,11 @@ class BaseModel:
             storage.new(self)
 
     def __str__(self):
+        """This is the string representation of the BaseModel class"""
         return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
     def save(self):
+        """The Save function saves the data in the database"""
         self.updated_at = datetime.datetime.now()
         storage.save()
 
@@ -41,5 +44,4 @@ class BaseModel:
             if key in search_list:
                 value = value.isoformat()
             my_dict[key] = value
-        #print(self.__dict__)
         return my_dict
