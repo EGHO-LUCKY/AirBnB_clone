@@ -9,7 +9,7 @@ from models import storage
 class BaseModel:
     """This is the base class"""
     def __init__(self, *args, **kwargs):
-
+        """Initializes the BaseModel class"""
         if kwargs:
             for key, value in kwargs.items():
                 if key == "id":
@@ -38,6 +38,7 @@ class BaseModel:
         storage.save()
 
     def to_dict(self):
+        """Returns a dictionary representation of the BaseModel class"""
         my_dict = {"__class__": self.__class__.__name__}
         search_list = ["created_at", "updated_at"]
         for key, value in self.__dict__.items():
