@@ -66,13 +66,11 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** instance id missing **")
         elif count == 2:
-            new_dict = self.read_json("file.json")
             key = ".".join(my_list)
-            if new_dict is not None:
-                if key in new_dict.keys():
-                    print(BaseModel(**new_dict[key]))
-                else:
-                    print("** no instance found **")
+            all_instances = storage.all()
+            if key in all_instances.keys():
+                instance = all_instances[key]
+                print(instance)
             else:
                 print("** no instance found **")
 
@@ -92,15 +90,13 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** instance id missing **")
         elif count == 2:
-            with open("file.json", "r") as file:
-                new_dict = json.load(file)
-                key = ".".join(my_list)
-                if key in new_dict.keys():
-                    del new_dict[key]
-                else:
-                    print("** no instance found **")
-            with open("file.json", "w") as file:
-                json.dump(new_dict, file)
+            all_instances = storage.all()
+            key = ".".join(my_list)
+            if key in all_instances.keys():
+                del all_instances[key]
+                storage.save()
+            else:
+                print("** no instance found **")
 
     def do_all(self, arg):
         """Displays all models in the database"""
@@ -113,17 +109,18 @@ class HBNBCommand(cmd.Cmd):
                 print("[]")
         else:
             model_dict = {"BaseModel": BaseModel}
-            new_dict = self.read_json("file.json")
+            #new_dict = self.read_json("file.json")
+            all_instances = storage.all()
+
             new_list = []
-            if new_dict is not None:
-                for key, value in new_dict.items():
+            if all_instances is not None:
+                for key, value in all_instances.items():
                     my_list = key.split(".")
                     if my_list[0] == arg:
-                        new_list.append(str(model_dict[arg](**value)))
-            if not new_list:
-                print("** class doesn't exist **")
-            else:
+                        new_list.append(str(value))
                 print(new_list)
+            else:
+                print("** class doesn't exist **")
 
     def do_update(self, arg):
         """Updates a Model in the database"""
