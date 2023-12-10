@@ -102,14 +102,13 @@ class HBNBCommand(cmd.Cmd):
         """Displays all models in the database"""
         if not arg:
             try:
-                new_dict = self.read_json("file.json")
-                new_list = [str(BaseModel(**value)) for value in new_dict.values()]
+                all_instances = storage.all()
+                new_list = [str(value) for value in all_instances.values()]
                 print(new_list)
             except:
                 print("[]")
         else:
             model_dict = {"BaseModel": BaseModel}
-            #new_dict = self.read_json("file.json")
             all_instances = storage.all()
 
             new_list = []
@@ -118,7 +117,10 @@ class HBNBCommand(cmd.Cmd):
                     my_list = key.split(".")
                     if my_list[0] == arg:
                         new_list.append(str(value))
-                print(new_list)
+                if not new_list:
+                    print("** class doesn't exist **")
+                else:
+                    print(new_list)
             else:
                 print("** class doesn't exist **")
 
