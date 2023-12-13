@@ -5,6 +5,7 @@ import models
 
 
 class User(models.base_model.BaseModel):
+    """This is the User class"""
     email = ""
     password = ""
     first_name = ""
