@@ -3,6 +3,7 @@
 
 import models
 
+
 class User(models.base_model.BaseModel):
     email = ""
     password = ""
