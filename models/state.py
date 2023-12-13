@@ -5,4 +5,5 @@ import models
 
 
 class State(models.base_model.BaseModel):
+    """This is the state class"""
     name = ""
