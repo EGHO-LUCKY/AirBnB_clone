@@ -4,6 +4,6 @@
 import models
 
 
-class Amenity(modeils.base_model.BaseModel):
+class Amenity(models.base_model.BaseModel):
     """This is the Amenity class"""
     name = ""
