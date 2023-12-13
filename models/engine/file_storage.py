@@ -2,6 +2,8 @@
 """This is the module for the file_storage class"""
 
 import json
+from models.base_model import BaseModel
+from models.user import User
 
 
 class FileStorage:
@@ -9,6 +11,10 @@ class FileStorage:
 
     __file_path = "file.json"
     __objects = {}
+    class_dict = {
+            "BaseModel": BaseModel,
+            "User": User
+            }
 
     def all(self):
         """Returns the dictionary of objects"""
@@ -30,11 +36,11 @@ class FileStorage:
     def reload(self):
         """Loads the file into the object dictionary"""
         try:
-            from models.base_model import BaseModel
             with open(self.__file_path, 'r', encoding="UTF-8") as file:
                 new_dict = json.load(file)
                 for key, value in new_dict.items():
-                    self.__objects[key] = BaseModel(**value)
-                    print(BaseModel(**value))
+                    class_name = value["__class__"]
+                    if class_name in self.class_dict:
+                        self.__objects[key] = self.class_dict[class_name](**value)
         except FileNotFoundError:
             pass
