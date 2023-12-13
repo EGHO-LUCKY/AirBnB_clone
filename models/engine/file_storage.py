@@ -2,8 +2,14 @@
 """This is the module for the file_storage class"""
 
 import json
+import models
 from models.base_model import BaseModel
 from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class FileStorage:
@@ -13,7 +19,12 @@ class FileStorage:
     __objects = {}
     class_dict = {
             "BaseModel": BaseModel,
-            "User": User
+            "User": User,
+            "State": State,
+            "City": City,
+            "Amenity": Amenity,
+            "Place": Place,
+            "Review": Review
             }
 
     def all(self):
