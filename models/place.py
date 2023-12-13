@@ -5,6 +5,7 @@ import models
 
 
 class Place(models.base_model.BaseModel):
+    """This is the Place class"""
     city_id = ""
     user_id = ""
     name = ""
@@ -15,4 +16,4 @@ class Place(models.base_model.BaseModel):
     price_by_night = 0
     latitude = 0.0
     longitude = 0.0
-    amenity_ids = ""
+    amenity_ids = []
