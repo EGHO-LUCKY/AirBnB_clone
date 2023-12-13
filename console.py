@@ -4,12 +4,26 @@
 import cmd
 from models.base_model import BaseModel
 from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 import json
 from models import storage
 
 
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
+    model_dict = {
+            "BaseModel": BaseModel,
+            "User": User,
+            "State": State,
+            "City": City,
+            "Amenity": Amenity,
+            "Place": Place,
+            "Review": Review
+            }
 
     def do_quit(self, arg):
         """Quit command to exit the program
@@ -27,8 +41,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         """creates a Model class"""
-        if arg == "BaseModel":
-            new_instance = BaseModel()
+        if arg in self.model_dict:
+            new_instance = self.model_dict[arg]()
             new_instance.save()
             print(new_instance.id)
         elif not arg:
@@ -47,10 +61,10 @@ class HBNBCommand(cmd.Cmd):
         if count == 0:
             print("** class name missing **")
         elif count == 1:
-            if my_list[0] != "BaseModel":
-                print("** class doesn't exist **")
-            else:
+            if my_list[0] in self.model_dict:
                 print("** instance id missing **")
+            else:
+                print("** class doesn't exist **")
         elif count == 2:
             key = ".".join(my_list)
             all_instances = storage.all()
@@ -71,10 +85,10 @@ class HBNBCommand(cmd.Cmd):
         if count == 0:
             print("** class name missing **")
         elif count == 1:
-            if my_list[0] != "BaseModel":
-                print("** class doesn't exist **")
-            else:
+            if my_list[0] in self.model_dict:
                 print("** instance id missing **")
+            else:
+                print("** class doesn't exist **")
         elif count == 2:
             all_instances = storage.all()
             key = ".".join(my_list)
@@ -121,7 +135,7 @@ class HBNBCommand(cmd.Cmd):
         if count == 0:
             print("** class name missing **")
         elif count == 1:
-            if my_list[0] == "BaseModel":
+            if my_list[0] in self.model_dict:
                 print("** instance id missing **")
             else:
                 print("** class doesn't exist **")
