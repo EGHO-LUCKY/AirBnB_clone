@@ -3,6 +3,7 @@
 
 import cmd
 from models.base_model import BaseModel
+from models.user import User
 import json
 from models import storage
 
@@ -93,7 +94,6 @@ class HBNBCommand(cmd.Cmd):
             except Exception:
                 print("[]")
         else:
-            model_dict = {"BaseModel": BaseModel}
             all_instances = storage.all()
 
             new_list = []
