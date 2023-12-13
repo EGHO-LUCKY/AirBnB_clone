@@ -3,7 +3,7 @@
 
 import uuid
 import datetime
-from models import storage
+import models
 
 
 class BaseModel:
@@ -26,7 +26,7 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.datetime.now()
             self.updated_at = datetime.datetime.now()
-            storage.new(self)
+            models.storage.new(self)
 
     def __str__(self):
         """This is the string representation of the BaseModel class"""
@@ -35,7 +35,7 @@ class BaseModel:
     def save(self):
         """The Save function saves the data in the database"""
         self.updated_at = datetime.datetime.now()
-        storage.save()
+        models.storage.save()
 
     def to_dict(self):
         """Returns a dictionary representation of the BaseModel class"""
