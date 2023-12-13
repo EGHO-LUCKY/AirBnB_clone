@@ -3,5 +3,6 @@
 
 import models
 
-class Amenity(models.base_model.BaseModel):
+
+class Amenity(modeils.base_model.BaseModel):
     name = ""
