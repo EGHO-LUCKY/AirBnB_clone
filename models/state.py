@@ -3,5 +3,6 @@
 
 import models
 
+
 class State(models.base_model.BaseModel):
     name = ""
